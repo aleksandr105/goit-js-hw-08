@@ -18,6 +18,7 @@ function onForwardingFeedback(e) {
   e.preventDefault();
   e.currentTarget.reset();
   localStorage.removeItem(STORAGE_KEY);
+  console.log(formText);
 }
 
 function onFeedback(e) {
