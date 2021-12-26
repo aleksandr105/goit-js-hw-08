@@ -6,13 +6,31 @@ const refs = {
   formEl: document.querySelector('.feedback-form'),
 };
 
-refs.formEl.addEventListener('input', onFeedback);
+const STORAGE_KEY = 'feedback-form-state';
+let formText = {};
+
+refs.formEl.addEventListener('input', throttle(onFeedback, 500));
+refs.formEl.addEventListener('submit', onForwardingFeedback);
+
+populateForm();
+
+function onForwardingFeedback(e) {
+  e.preventDefault();
+  e.currentTarget.reset();
+  localStorage.removeItem(STORAGE_KEY);
+}
 
 function onFeedback(e) {
-  const text = {
-    email: `${e.target.value}`,
-    message: `${e.target.value}`,
-  };
-  localStorage.setItem('feedback-form-state', JSON.stringify(text));
-  console.log(text.message);
+  formText[e.target.name] = e.target.value;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(formText));
+}
+
+function populateForm() {
+  const messageText = localStorage.getItem(STORAGE_KEY);
+
+  if (messageText) {
+    formText = JSON.parse(messageText);
+    refs.mailEl.value = formText.email;
+    refs.messageEl.value = formText.message;
+  }
 }
