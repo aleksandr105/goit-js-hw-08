@@ -16,9 +16,15 @@ populateForm();
 
 function onForwardingFeedback(e) {
   e.preventDefault();
-  e.currentTarget.reset();
-  localStorage.removeItem(STORAGE_KEY);
-  console.log(formText);
+
+  if (formText.email && formText.message) {
+    e.currentTarget.reset();
+    localStorage.removeItem(STORAGE_KEY);
+    console.log(formText);
+    formText = {};
+  } else {
+    alert('Нужно заполнить все поля');
+  }
 }
 
 function onFeedback(e) {
