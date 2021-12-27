@@ -7,7 +7,10 @@ const refs = {
 };
 
 const STORAGE_KEY = 'feedback-form-state';
-let formText = {};
+let formText = {
+  email: '',
+  message: '',
+};
 
 refs.formEl.addEventListener('input', throttle(onFeedback, 500));
 refs.formEl.addEventListener('submit', onForwardingFeedback);
@@ -37,6 +40,7 @@ function populateForm() {
 
   if (messageText) {
     formText = JSON.parse(messageText);
+
     refs.mailEl.value = formText.email;
     refs.messageEl.value = formText.message;
   }
