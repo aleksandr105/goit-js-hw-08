@@ -24,7 +24,10 @@ function onForwardingFeedback(e) {
     e.currentTarget.reset();
     localStorage.removeItem(STORAGE_KEY);
     console.log(formText);
-    formText = {};
+    formText = {
+      email: '',
+      message: '',
+    };
   } else {
     alert('Нужно заполнить все поля');
   }
